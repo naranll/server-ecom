@@ -3,12 +3,37 @@ const cors = require("cors");
 const fs = require("fs");
 // const products = require("./DATA/products.json");
 // const users = require("./DATA/users.json");
+const cloudinary = require("cloudinary")
+const multer = require("multer")
 
 const app = express();
 const port = 2020;
+const upload = multer({ dest: 'uploads/' })
 
 app.use(cors());
 app.use(express.json());
+
+//multer middleware
+
+
+//cloudinary upload
+cloudinary.config({
+    cloud_name: "dc91nkhq6",
+    api_key: "659977566675479",
+    api_secret: "SwmIGEeuTS2tWd7pyXRWqeeY4ik"
+});
+
+const res = cloudinary.uploader.upload(
+    '',
+    { public_id: "olympic_flag" }
+)
+
+res.then((data) => {
+    console.log(data);
+    console.log(data.secure_url);
+}).catch((err) => {
+    console.log(err);
+});
 
 app.get("/products", (request, response) => {
     console.log("Requesting data axios");
